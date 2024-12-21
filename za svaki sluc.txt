@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hromozomi</title>
+    <style>
+        body {
+            background-image: url('https://wallup.net/wp-content/uploads/2018/09/30/898654-medical-biology-detail-medicine-psychedelic-science-abstract-abstraction-chemistry-genetics.jpg');
+            background-size: cover;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        canvas { position: absolute; top: 0; left: 0; z-index: -1; }
+        #hromozom1, #hromozom2, #hromozom3, #hromozom4, #hromozom5, #hromozom6 {
+            width: 30%;
+            margin: 0 20px;
+            cursor: pointer;
+        }
+        #hromozom6 {
+            margin-top: 10px; /* Povučen malo prema dolje */
+        }
+        .words {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            z-index: 10;
+            text-align: left;
+            min-width: 220px;
+            width: 400px;
+            height: auto;
+            overflow: auto;
+        }
+        h2 {
+            font-size: 20px;
+            margin: 5px 0;
+            cursor: pointer;
+        }
+        .spacer {
+            margin: 40px 0;
+        }
+        .closeBtn {
+            margin-top: 10px;
+            padding: 10px 30px;
+            background: #0000FF;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .detail {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #000; 
+            color: white;
+            padding: 40px; 
+            border-radius: 12px;
+            z-index: 20;
+            width: 300px; 
+            height: auto; 
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            #hromozom1, #hromozom2, #hromozom3 {
+                width: 30%; 
+            }
+            .words {
+                width: 90%; 
+                min-width: 150px; 
+            }
+            .detail {
+                width: 80%; 
+            }
+            h2 {
+                font-size: 16px; 
+            }
+        }
+        @media (max-width: 480px) {
+            h2 {
+                font-size: 14px; 
+            }
+            .closeBtn {
+                padding: 8px 20px; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img id="hromozom1" src="hromozom1.png" alt="Hromozom 1">
+        <img id="hromozom2" src="hromozom2.png" alt="Hromozom 2">
+        <img id="hromozom3" src="hromozom3.png" alt="Hromozom 3">
+        <img id="hromozom4" src="hromozom4.png" alt="Hromozom 4">
+        <img id="hromozom5" src="hromozom5.png" alt="Hromozom 5">
+        <img id="hromozom6" src="hromozom6.png" alt="Hromozom 6">
+    </div>
+    
+    <div id="words1" class="words">
+        <img src="genotip1.png" alt="Slika" style="width: 43px; height: auto; float: left; margin-right: 10px;">
+        <h2 id="eds">EDS VI</h2>
+        <h2 id="rh">RH</h2>
+        <h2 id="cmt2">CMT 2</h2>
+        <h2 id="mcad">MCAD</h2>
+        <h2 id="pxmp1">PXMP 1</h2>
+        
+        <h2 class="spacer"></h2>
+        
+        <h2 id="cmt18">CMT 18</h2>
+        <h2 id="f5">F5</h2>
+        <h2 id="atIII">AT III</h2>
+        <h2 id="ncf2">NCF 2</h2>
+        <h2 id="cmh2">CMH2</h2>
+        <h2 id="ush2">USH2</h2>
+        <h2 id="vws">VWS</h2>
+        <button id="closeWordsBtn" class="closeBtn">Zatvori</button>
+    </div>
+
+    <div id="words2" class="words">
+        <img src="genotip2.png" alt="Slika" style="width: 43px; height: auto; float: left; margin-right: 10px;">
+        <h2 id="acth">ACTH</h2>
+        <h2 id="apob">APOB</h2>
+        <h2 id="msh2">MSH2</h2>
+        <h2 id="igkc">IGKC</h2>
+        <h2 id="proc">PROC</h2>
+        <h2 id="col3a1">COL3A1</h2>
+        <h2 id="ws1">WS1</h2>
+        <button id="closeWords2Btn" class="closeBtn">Zatvori</button>
+    </div>
+    
+    <div id="words3" class="words">
+        <img src="genotip3.png" alt="Slika" style="width: 43px; height: auto; float: left; margin-right: 10px;">
+        <h2 id="vhl">VHL</h2>
+        <h2 id="glb1">GLB1</h2>
+        <h2 id="mitf">MITF</h2>
+        <h2 id="pros">PROS</h2>
+        <h2 id="rp4">RP4</h2>
+        <h2 id="aku">AKU</h2>
+        <button id="closeWords3Btn" class="closeBtn">Zatvori</button>
+    </div>
+
+     <div id="words4" class="words">
+        <img src="genotip4.png" alt="Slika" style="width: 43px; height: auto; float: left; margin-right: 10px;">
+        <h2 id="fgfr3">FGFR3</h2>
+        <h2 id="hd">HD</h2>
+        <h2 id="idua">IDUA</h2>
+        <h2 id="apkd2">APKD2</h2>
+        <h2 id="f11">F11</h2>
+        <h2 id="fshmd">FSHMD</h2>
+        <button id="closeWords3Btn" class="closeBtn">Zatvori</button>
+    </div>
+      <div id="words5" class="words">
+        <img src="genotip5.png" alt="Slika" style="width: 43px; height: auto; float: left; margin-right: 10px;">
+        <h2 id="fgfr3">C6,7,9</h2>
+        <h2 id="hd">MPS VI</h2>
+        <h2 id="idua">SMA</h2>
+        <h2 id="apkd2">ARSB</h2>
+        <h2 id="f11">HEXB</h2>
+        <h2 id="fshmd">LGMD</h2>
+          <h2 id="fshmd">FAP</h2>
+            <h2 id="fshmd">FBN2</h2>
+              <h2 id="fshmd">TC0F1</h2>
+                <h2 id="fshmd">F11</h2>
+        <button id="closeWords3Btn" class="closeBtn">Zatvori</button>
+    </div>
+
+    <div id="detailEDS" class="detail">
+        <h2>Više informacija o EDS VI</h2>
+        <p>Ehlers-Danlosov sindrom tip VI</p>
+        <button class="closeDetailBtn">Zatvori</button>
+    </div>
+    <div id="detailRH" class="detail">
+        <h2>Više informacija o RH</h2>
+        <p>Rhesus null bolest, Rhesus</p>
+        <button class="closeDetailBtn">Zatvori</button>
+    </div>
+    <div id="detailCMT2" class="detail">
+        <h2>Više informacija o CMT 2</h2>
+        <p>Charcot-Marie-Toothova bolest tip 2</p>
+        <button class="closeDetailBtn">Zatvori</button>
+    </div>
+    <div id="detailMCAD" class="detail">
+        <h2>Više informacija o MCAD</h2>
+        <p>Koenzim A dehidrogenaza srednji lanac</p>
+        <button class="closeDetailBtn">Zatvori</button>
+    </div>
+    <div id="detailPXMP1" class="detail">
+        <h2>Više informacija o PXMP 1</h2>
+        <p>Zellwegerov sindrom tip 2</p>
+        <button class="closeDetailBtn">Zatvori</button>
+    </div>
+<div id="detailCMT18" class="detail">
+        <h2>Više informacija o CMT 18</h2>
+        <p>Charcot-Marie-Toothova bolest tip 18</p>
+        <button class="closeDetailBtn">Zatvori</button>
+    </div>
+    <div id="detailF5" class="detail">    
+        <h2>Više informacija o F5</h2>
+        <p>Gen za faktor koagulacije 5</p>
+        <button class="closeDetailBtn">Zatvori</button>
+    </div>
+    <div id="detailATIII" class="detail">
+        <h2>Više informacija o AT III</h2>
+        <p>Antitrombin III</p>
+        <button class="closeDetailBtn">Zatvori</button>
+    </div>
+    <div id="detailNCF2" class="detail">
+        <h2>Više informacija o NCF 2</h2>
+        <p>Gen za faktor 2 neutrofilnih granula</p>
+        <button class="closeDetailBtn">Zatvori</button>
+    </div>
+    <div id="detailCMH2" class="detail">
+        <h2>Više informacija o CMH2</h2>
+        <p>Gen za kardijalne miopatije tip 2</p>
+        <button class="closeDetailBtn">Zatvori</button>
+    </div>
+    <div id="detailUSH2" class="detail">
+        <h2>Više informacija o USH2</h2>
+        <p>Usherov sindrom tip 2</p>
+        <button class="closeDetailBtn">Zatvori</button>
+    </div>
+    <div id="detailVWS" class="detail">
+        <h2>Više informacija o VWS</h2>
+        <p>Willebrandova bolest tip 2</p>
+        <button class="closeDetailBtn">Zatvori</button>
+    </div>
+    <div id="detailACTH" class="detail">
+        <h2>Više informacija o ACTH</h2>
+        <p>Adrenokortikotropni hormon</p>
+        <button class="closeDetailBtn">Zatvori</button>
+    </div>
+    <div id="detailAPOB" class="detail">
+        <h2>Više informacija o APOB</h2>
+        <p>Apolipoprotein B</p>
+        <button class="closeDetailBtn">Zatvori</button>
+    </div>
+    <div id="detailMSH2" class="detail">
+        <h2>Više informacija o MSH2</h2>
+        <p>Gen za MSH2 protein</p>
+        <button class="closeDetailBtn">Zatvori</button>
+    </div>
+    <div id="detailIGKC" class="detail">
+        <h2>Više informacija o IGKC</h2>
+        <p>Imunoglobulin lambda C</p>
+        <button class="closeDetailBtn">Zatvori</button>
+    </div>
+    <div id="detailPROC" class="detail">
+        <h2>Više informacija o PROC</h2>
+        <p>Protein C</p>
+        <button class="closeDetailBtn">Zatvori</button>
+    </div>
+    <div id="detailCOL3A1" class="detail">
+        <h2>Više informacija o COL3A1</h2>
+        <p>Kolagen tipa III</p>
+        <button class="closeDetailBtn">Zatvori</button>
+    </div>
+    <div id="detailWS1" class="detail">
+        <h2>Više informacija o WS1</h2>
+        <p>Geni za WS1</p>
+        <button class="closeDetailBtn">Zatvori</button>
+    </div>
+    <div id="detailVHL" class="detail">
+        <h2>Više informacija o VHL</h2>
+        <p>Von Hippel-Lindau bolest</p>
+        <button class="closeDetailBtn">Zatvori</button>
+    </div>
+    <div id="detailGLB1" class="detail">
+        <h2>Više informacija o GLB1</h2>
+        <p>Gen za GLB1 protein</p>
+        <button class="closeDetailBtn">Zatvori</button>
+    </div>
+    <div id="detailMITF" class="detail">
+        <h2>Više informacija o MITF</h2>
+        <p>Gen za MITF protein</p>
+        <button class="closeDetailBtn">Zatvori</button>
+    </div>
+    <div id="detailPROS" class="detail">
+        <h2>Više informacija o PROS</h2>
+        <p>Gen za PROS</p>
+        <button class="closeDetailBtn">Zatvori</button>
+    </div>
+    <div id="detailRP4" class="detail">
+        <h2>Više informacija o RP4</h2>
+        <p>Gen za RP4</p>
+        <button class="closeDetailBtn">Zatvori</button>
+    </div>
+    <div id="detailAKU" class="detail">
+        <h2>Više informacija o AKU</h2>
+        <p>Gen za AKU</p>
+        <button class="closeDetailBtn">Zatvori</button>
+    </div>   
+     <div id="detailFGFR3" class="detail">
+        <h2>Više informacija o FGFR3</h2>
+        <p>Gen za MITF protein</p>
+        <button class="closeDetailBtn">Zatvori</button>
+    </div>
+    <div id="detailHD"class="detail">
+        <h2>Više informacija o HD</h2>
+        <p>Gen za MITF protein</p>
+        <button class="closeDetailBtn">Zatvori</button>
+    </div>
+    <div id="detailIDUA"class="detail">
+        <h2>Više informacija o IDUA</h2>
+        <p>Gen za MITF protein</p>
+        <button class="closeDetailBtn">Zatvori</button>
+    </div>
+    <div id="detailAPKD2"class="detail">
+        <h2>Više informacija o APKD2</h2>
+        <p>Gen za MITF protein</p>
+        <button class="closeDetailBtn">Zatvori</button>
+    </div>
+    <div id="detailF11l"class="detail">
+        <h2>Više informacija o F11</h2>
+        <p>Gen za MITF protein</p>
+        <button class="closeDetailBtn">Zatvori</button>
+    </div>
+    <div id="detailFSHMD"class="detail">
+        <h2>Više informacija o FSHMD</h2>
+        <p>Gen za MITF protein</p>
+        <button class="closeDetailBtn">Zatvori</button>
+    </div>
+    <script>
+        document.querySelectorAll('img[id^="hromozom"]').forEach(item => {
+            item.addEventListener('click', event => {
+                const wordId = 'words' + event.target.id.charAt(event.target.id.length - 1);
+                document.querySelectorAll('.words').forEach(wordContainer => {
+                    wordContainer.style.display = 'none';
+                });
+                document.getElementById(wordId).style.display = 'block';
+            });
+        });
+
+        const closeWordsBtns = document.querySelectorAll('.closeBtn');
+        closeWordsBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.words').forEach(wordContainer => {
+                    wordContainer.style.display = 'none';
+                });
+            });
+        });
+
+        const detailButtons = [
+            {id: "eds", detailId: "detailEDS"},
+            {id: "rh", detailId: "detailRH"},
+            {id: "cmt2", detailId: "detailCMT2"},
+            {id: "mcad", detailId: "detailMCAD"},
+            {id: "pxmp1", detailId: "detailPXMP1"},
+            {id: "cmt18", detailId: "detailCMT18"},
+            {id: "f5", detailId: "detailF5"},
+            {id: "atIII", detailId: "detailATIII"},
+            {id: "ncf2", detailId: "detailNCF2"},
+            {id: "cmh2", detailId: "detailCMH2"},
+            {id: "ush2", detailId: "detailUSH2"},
+            {id: "vws", detailId: "detailVWS"},
+            {id: "acth", detailId: "detailACTH"},
+            {id: "apob", detailId: "detailAPOB"},
+            {id: "msh2", detailId: "detailMSH2"},
+            {id: "igkc", detailId: "detailIGKC"},
+            {id: "proc", detailId: "detailPROC"},
+            {id: "col3a1", detailId: "detailCOL3A1"},
+            {id: "ws1", detailId: "detailWS1"},
+            {id: "vhl", detailId: "detailVHL"},
+            {id: "glb1", detailId: "detailGLB1"},
+            {id: "mitf", detailId: "detailMITF"},
+            {id: "pros", detailId: "detailPROS"},
+            {id: "rp4", detailId: "detailRP4"},
+            {id: "aku", detailId: "detailAKU"},
+            {id: "fgfr3", detailId:"detailFGFR3"},
+           {id: "hd", detailId:"detailHD"},
+            {id: "idua", detailId:"detailIDUA"},
+            {id: "apkd2", detailId:"detailAPKD2"},
+             {id: "f11", detailId:"detailf11"},
+            {id: "fshmd", detailId:"detailFSHMD"}
+        ];
+
+        detailButtons.forEach(button => {
+            document.getElementById(button.id).addEventListener('click', () => {
+                document.querySelectorAll('.detail').forEach(detail => {
+                    detail.style.display = 'none';
+                });
+                document.getElementById(button.detailId).style.display = 'block';
+            });
+        });
+
+        const closeDetailBtns = document.querySelectorAll('.closeDetailBtn');
+        closeDetailBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.detail').forEach(detail => {
+                    detail.style.display = 'none';
+                });
+            });
+        });
+
+    </script>
+</body>
+</html>

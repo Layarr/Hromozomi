@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hromozomi</title>
+    <style>
+        body {
+            background-image: url('https://wallup.net/wp-content/uploads/2018/09/30/898654-medical-biology-detail-medicine-psychedelic-science-abstract-abstraction-chemistry-genetics.jpg');
+            background-size: cover;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        canvas { position: absolute; top: 0; left: 0; z-index: -1; }
+
+        /* Stil za slike hromozoma */
+        img[id^="hromozom"] {
+            width: 100%;
+            margin: 0 80px;
+            cursor: pointer;
+            transition: transform 0.3s ease; /* Tranzicija za povećavanje/smanjivanje */
+        }
+
+        #hromozom7 {
+            margin-top: 10px; /* Povučen malo prema dolje */
+        }
+        .words {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            z-index: 10;
+            text-align: left;
+            min-width: 220px;
+            width: 400px;
+            height: auto;
+            overflow: auto;
+        }
+        h2 {
+            font-size: 20px;
+            margin: 5px 0;
+            cursor: pointer;
+        }
+        .spacer {
+            margin: 40px 0;
+        }
+        .closeBtn {
+            margin-top: 10px;
+            padding: 10px 30px;
+            background: #0000FF;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .detail {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #000; 
+            color: white;
+            padding: 40px; 
+            border-radius: 12px;
+            z-index: 20;
+            width: 300px; 
+            height: auto; 
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            #hromozom1, #hromozom2, #hromozom3 {
+                width: 30%; 
+            }
+            .words {
+                width: 90%; 
+                min-width: 150px; 
+            }
+            .detail {
+                width: 80%; 
+            }
+            h2 {
+                font-size: 16px; 
+            }
+        }
+        @media (max-width: 480px) {
+            h2 {
+                font-size: 14px; 
+            }
+            .closeBtn {
+                padding: 8px 20px; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Prvi red s hromozomima 1-6 -->
+        <img id="hromozom1" src="hromozom1.png" alt="Hromozom 1" data-target="words1">
+        <img id="hromozom2" src="hromozom2.png" alt="Hromozom 2" data-target="words2">
+        <img id="hromozom3" src="hromozom3.png" alt="Hromozom 3" data-target="words3">
+        <img id="hromozom4" src="hromozom4.png" alt="Hromozom 4" data-target="words4">
+        <img id="hromozom5" src="hromozom5.png" alt="Hromozom 5" data-target="words5">
+    </div>
+
+    <!-- Drugi red s hromozomima 7-12 -->
+    <div class="container">
+        <img id="hromozom6" src="hromozom6.png" alt="Hromozom 6" data-target="words6">
+        <img id="hromozom7" src="hromozom7.png" alt="Hromozom 7" data-target="words7">
+        <img id="hromozom8" src="hromozom8.png" alt="Hromozom 8" data-target="words8">
+        <img id="hromozom9" src="hromozom9.png" alt="Hromozom 9" data-target="words9">
+        <img id="hromozom10" src="hromozom10.png" alt="Hromozom 10" data-target="words10">
+        <img id="hromozom11" src="hromozom11.png" alt="Hromozom 11" data-target="words11">
+        
+    </div>
+
+    <!-- Treći red s hromozomima 13-14 -->
+    <div class="container">
+        <img id="hromozom12" src="hromozom12.png" alt="Hromozom 12" data-target="words12">
+        <img id="hromozom13" src="hromozom13.png" alt="Hromozom 13" data-target="words13">
+        <img id="hromozom14" src="hromozom14.png" alt="Hromozom 14" data-target="words14">
+    </div>
+
+    <!-- Pop-up za riječ -->
+    <div id="words1" class="words">
+        <img src="genotip1.png" alt="Slika" style="width: 50px; height: auto; float: left; margin-right: 10px;">
+        <h2 data-detail="edsDetail">EDS VI</h2>
+        <h2 data-detail="rhDetail">RH</h2>
+        <h2 data-detail="cmt2Detail">CMT 2</h2>
+        <h2 data-detail="mcadDetail">MCAD</h2>
+        <h2 data-detail="pxmp1Detail">PXMP 1</h2>
+        <h2 class="spacer"></h2>
+        <h2 data-detail="cmt1bDetail">CMT1B</h2>
+         <h2 data-detail="f5Detail">F5</h2>
+         <h2 data-detail="at iiiDetail">AT III</h2>
+         <h2 data-detail="ncf2Detail">NCF2</h2>
+         <h2 data-detail="cmh2Detail">CMH2</h2>
+         <h2 data-detail="ush2Detail">USH2</h2>
+         <h2 data-detail="vwsDetail">VWS</h2>
+        <button id="closeWordsBtn" class="closeBtn">Zatvori</button>
+    </div>
+
+    <!-- Detalji za EDS VI -->
+    <div id="edsDetail" class="detail">
+        <p>Ehlers-Danlosov sindrom tip VI</p>
+        <button class="closeBtn" onclick="closeDetail('edsDetail')">Zatvori</button>
+    </div>
+
+    <!-- Detalji za RH -->
+    <div id="rhDetail" class="detail">
+        <p>Rhesus null bolest, Rhesus</p>
+        <button class="closeBtn" onclick="closeDetail('rhDetail')">Zatvori</button>
+    </div>
+
+    <!-- Detalji za CMT 2 -->
+    <div id="cmt2Detail" class="detail">
+        <p>Charcot-Marie-Toothova bolest tip 2</p>
+        <button class="closeBtn" onclick="closeDetail('cmt2Detail')">Zatvori</button>
+    </div>
+
+    <!-- Detalji za MCAD -->
+    <div id="mcadDetail" class="detail">
+        <p>Koenzim A dehidrogenaza srednji lanac</p>
+        <button class="closeBtn" onclick="closeDetail('mcadDetail')">Zatvori</button>
+    </div>
+
+    <!-- Detalji za PXMP 1 -->
+    <div id="pxmp1Detail" class="detail">
+        <p>Zellwegerov sindrom tip 2</p>
+        <button class="closeBtn" onclick="closeDetail('pxmp1Detail')">Zatvori</button>
+    </div>
+    <!-- Detalji za CMT 1B -->
+    <div id="cmt1bDetail" class="detail">
+        <p>Charcot-Marie-Toothova bolest tip 1B</p>
+        <button class="closeBtn" onclick="closeDetail('cmt1bDetail')">Zatvori</button>
+    </div>
+    <!-- Detalji za F5 -->
+    <div id="f5Detail" class="detail">
+        <p>Koagulacioni protein V</p>
+        <button class="closeBtn" onclick="closeDetail('f5Detail')">Zatvori</button>
+    </div>
+ <!-- Detalji za AT III -->
+    <div id="at iiiDetail" class="detail">
+        <p>Antitrombin III</p>
+        <button class="closeBtn" onclick="closeDetail('at iiiDetail')">Zatvori</button>
+    </div>
+     <!-- Detalji za NCF2 -->
+    <div id="ncf2Detail" class="detail">
+        <p>Hronična granulomatozna bolest definicija neutrofilnog citostol faktora 2</p>
+        <button class="closeBtn" onclick="closeDetail('ncf2Detail')">Zatvori</button>
+    </div>
+     <!-- Detalji za CMH2 -->
+    <div id="cmh2Detail" class="detail">
+        <p>Hipertrofična opstruktivna kardiomiopatija tip 2</p>
+        <button class="closeBtn" onclick="closeDetail('cmh2Detail')">Zatvori</button>
+    </div>
+     <!-- Detalji za USH2 -->
+    <div id="ush2Detail" class="detail">
+        <p>Usher sindrom tip 2</p>
+        <button class="closeBtn" onclick="closeDetail('ush2Detail')">Zatvori</button>
+    </div>
+    <!-- Detalji za VWS -->
+    <div id="vwsDetail" class="detail">
+        <p>Van der Woudeov sindrom</p>
+        <button class="closeBtn" onclick="closeDetail('vwsDetail')">Zatvori</button>
+    </div>
+    <!-- Pop-up za riječ -->
+    <div id="words2" class="words">
+        <img src="genotip2.png" alt="Slika" style="width: 60px; height: auto; float: left; margin-right: 10px;">
+        <h2 data-detail="acthDetail">ACTH</h2>
+        <h2 data-detail="apobDetail">APOB</h2>
+        <h2 data-detail="msh2Detail">MSH2</h2>
+        <h2 data-detail="igkcDetail">IGKC</h2>
+        <h2 class="spacer"></h2>
+        <h2 data-detail="procDetail">PROC</h2>
+
+        <h2 class="spacer"></h2>
+
+        <h2 data-detail="col3a1Detail">COL3A1</h2>
+
+        <h2 class="spacer"></h2>
+
+        <h2 data-detail="ws1Detail">WS1</h2>
+
+
+
+ <h2 class="spacer"></h2>
+  <h2 class="spacer"></h2>
+
+
+
+
+         <button id="closeWordsBtn" class="closeBtn">Zatvori</button>
+    </div>
+    <!-- Detalji za ACTH -->
+    <div id="acthDetail" class="detail">
+        <p>Deficit adrenokortikotropnog hormona</p>
+        <button class="closeBtn" onclick="closeDetail('acthDetail')">Zatvori</button>
+    </div>
+    <!-- Detalji za APOB -->
+    <div id="apobDetail" class="detail">
+        <p>Apolipoprotein B</p>
+        <button class="closeBtn" onclick="closeDetail('apobDetail')">Zatvori</button>
+    </div>
+     <!-- Detalji za MSH2 -->
+    <div id="msh2Detail" class="detail">
+        <p>Hereditarni nepolipozni kolorektalni kancer tip 1</p>
+        <button class="closeBtn" onclick="closeDetail('msh2Detail')">Zatvori</button>
+    </div>
+     <!-- Detalji za IGKC -->
+    <div id="igkcDetail" class="detail">
+        <p>Imunoglobulinski k laki lanac</p>
+        <button class="closeBtn" onclick="closeDetail('igkcDetail')">Zatvori</button>
+    </div>
+     <!-- Detalji za PROC -->
+    <div id="procDetail" class="detail">
+        <p>Protein C,poremećaj koagulacije</p>
+        <button class="closeBtn" onclick="closeDetail('procDetail')">Zatvori</button>
+    </div>
+     <!-- Detalji za COL3A1 -->
+    <div id="col3a1Detail" class="detail">
+        <p>Kolagen tipa III,a1-lanac
+        Ehlers-Danlosov sindrom tip IV</p>
+        <button class="closeBtn" onclick="closeDetail('col3a1Detail')">Zatvori</button>
+    </div>
+ <!-- Detalji za WS1 -->
+    <div id="ws1Detail" class="detail">
+        <p>Waardenburgov sindrom tip I</p>
+        <button class="closeBtn" onclick="closeDetail('ws1Detail')">Zatvori</button>
+    </div>
+     <!-- Pop-up za riječ -->
+    <div id="words3" class="words">
+        <img src="genotip3.png" alt="Slika" style="width: 60px; height: auto; float: left; margin-right: 10px;">
+        
+        <h2 class="spacer"></h2>
+
+        <h2 data-detail="vhlDetail">VHL</h2>
+
+        <h2 class="spacer"></h2>
+
+        <h2 data-detail="glb1Detail">GLB1</h2>
+        <h2 data-detail="mitfDetail">MITF</h2>
+        <h2 class="spacer"></h2>
+        <h2 data-detail="prosDetail">PROS</h2>
+
+
+       
+        <h2 class="spacer"></h2>
+
+
+        
+        <h2 data-detail="rp4Detail">RP4</h2>
+
+
+
+        <h2 class="spacer"></h2>
+
+
+
+
+        <h2 data-detail="akuDetail">AKU</h2>
+
+         <h2 class="spacer"></h2>
+
+         <button id="closeWordsBtn" class="closeBtn">Zatvori</button>
+     </div>
+         <!-- Detalji za VHL -->
+    <div id="vhlDetail" class="detail">
+        <p>Von Hippel-Lindau sindrom</p>
+        <button class="closeBtn" onclick="closeDetail('vhlDetail')">Zatvori</button>
+    </div>
+    <!-- Detalji za GLB1 -->
+    <div id="glb1Detail" class="detail">
+        <p>GM1 gangliozidoza</p>
+        <button class="closeBtn" onclick="closeDetail('glb1Detail')">Zatvori</button>
+    </div>
+    <!-- Detalji za MITF -->
+    <div id="mitfDetail" class="detail">
+        <p>Waardenburgov sindrom tip 2</p>
+        <button class="closeBtn" onclick="closeDetail('mitfDetail')">Zatvori</button>
+    </div>
+    <!-- Detalji za PROS -->
+    <div id="prosDetail" class="detail">
+        <p>Protein S,poremećaj koagulacije</p>
+        <button class="closeBtn" onclick="closeDetail('prosDetail')">Zatvori</button>
+    </div>
+    <!-- Detalji za RP4 -->
+    <div id="rp4Detail" class="detail">
+        <p>Gen za RP4</p>
+        <button class="closeBtn" onclick="closeDetail('rp4Detail')">Zatvori</button>
+    </div>
+    <!-- Detalji za AKU -->
+    <div id="akuDetail" class="detail">
+        <p>Alkaptonurija</p>
+        <button class="closeBtn" onclick="closeDetail('akuDetail')">Zatvori</button>
+    </div>
+    <!-- Pop-up za riječ -->
+    <div id="words4" class="words">
+        <img src="genotip4.png" alt="Slika" style="width: 65px; height: auto; float: left; margin-right: 10px;">
+        <h2 data-detail="fgfr3Detail">FGFR3</h2>
+        <h2 data-detail="hdDetail">HD</h2>
+        <h2 data-detail="iduaDetail">IDUA</h2>
+
+
+        <h2 class="spacer"></h2>
+
+
+
+        <h2 data-detail="apkd2Detail">APKD2</h2>
+
+
+
+        <h2 class="spacer"></h2>
+
+
+
+        <h2 data-detail="f11Detail">F11</h2>
+        <h2 data-detail="fshmdDetail">FSHMD</h2>
+
+        
+
+         <h2 class="spacer"></h2>
+
+
+        
+         <button id="closeWordsBtn" class="closeBtn">Zatvori</button>
+     </div>
+      <!-- Detalji za FGFR3 -->
+    <div id="fgfr3Detail" class="detail">
+        <p>Receptor za fibroblastni faktor rasta 3,
+        ahondroplazija,tanatoforna</p>
+        <button class="closeBtn" onclick="closeDetail('fgfr3Detail')">Zatvori</button>
+    </div>
+    <!-- Detalji za HD -->
+    <div id="hdDetail" class="detail">
+        <p>Huntigtonova bolest</p>
+        <button class="closeBtn" onclick="closeDetail('hdDetail')">Zatvori</button>
+    </div>
+    <!-- Detalji za IDUA -->
+    <div id="iduaDetail" class="detail">
+        <p>Mukopolisaharidoza tip I,Hurlerov sindrom</p>
+        <button class="closeBtn" onclick="closeDetail('iduaDetail')">Zatvori</button>
+    </div>
+    <!-- Detalji za APKD2 -->
+    <div id="apkd2Detail" class="detail">
+        <p>Policistična bolest bubrega odraslih lokus 2</p>
+        <button class="closeBtn" onclick="closeDetail('apkd2Detail')">Zatvori</button>
+    </div>
+    <!-- Detalji za F11 -->
+    <div id="f11Detail" class="detail">
+        <p>Koagulacioni faktor XI</p>
+        <button class="closeBtn" onclick="closeDetail('f11Detail')">Zatvori</button>
+    </div>
+    <!-- Detalji za FSHMD -->
+    <div id="fshmdDetail" class="detail">
+        <p>Facioskapulohumeralna mišićna distrofija</p>
+        <button class="closeBtn" onclick="closeDetail('fshmdDetail')">Zatvori</button>
+    </div>
+<!-- Pop-up za riječ -->
+    <div id="words5" class="words">
+        <img src="genotip5.png" alt="Slika" style="width: 65px; height: auto; float: left; margin-right: 10px;">
+        <h2 data-detail="c6,7,9Detail">C6,7,9</h2>
+
+        <h2 class="spacer"></h2>
+
+
+        <h2 data-detail="mpsviDetail">MPS VI</h2>
+        <h2 data-detail="smaDetail">SMA</h2>
+        <h2 data-detail="arsbDetail">ARSB</h2>
+        <h2 data-detail="hexbDetail">HEXB</h2>
+        <h2 data-detail="lgmdDetail">LGMD</h2>
+         <h2 data-detail="fapDetail">FAP</h2>
+          <h2 data-detail="fbn2Detail">FBN2</h2>
+           <h2 data-detail="tc0f1Detail">TC0F1</h2>
+            <h2 data-detail="f12Detail">F12</h2>
+         <button id="closeWordsBtn" class="closeBtn">Zatvori</button>
+     </div>
+
+      <!-- Detalji za C6,7,9 -->
+    <div id="c6,7,9Detail" class="detail">
+        <p>Komplement faktor 6,7,9</p>
+        <button class="closeBtn" onclick="closeDetail('c6,7,9Detail')">Zatvori</button>
+    </div>
+    <!-- Detalji za MPS VI -->
+    <div id="mpsviDetail" class="detail">
+        <p>Maroteaux-Lamyov sindrom</p>
+        <button class="closeBtn" onclick="closeDetail('mpsviDetail')">Zatvori</button>
+    </div>
+    <!-- Detalji za SMA -->
+    <div id="smaDetail" class="detail">
+        <p>Spinalna mišićna atrofija</p>
+        <button class="closeBtn" onclick="closeDetail('smaDetail')">Zatvori</button>
+    </div>
+    <!-- Detalji za ARSB -->
+    <div id="arsbDetail" class="detail">
+        <p>Mukopolisaharidoza tip VI,
+        Maroteaux-Lamyov sindrom</p>
+        <button class="closeBtn" onclick="closeDetail('arsbDetail')">Zatvori</button>
+    </div>
+    <!-- Detalji za HEXB -->
+    <div id="hexbDetail" class="detail">
+        <p>Bolest heksozaminidaza B,Sandhoffova</p>
+        <button class="closeBtn" onclick="closeDetail('hexbDetail')">Zatvori</button>
+    </div>
+    <!-- Detalji za LGMD -->
+    <div id="lgmdDetail" class="detail">
+        <p>Distrofija pojasa ekstremiteta</p>
+        <button class="closeBtn" onclick="closeDetail('lgmdDetail')">Zatvori</button>
+    </div>
+      <!-- Detalji za FAP -->
+    <div id="fapDetail" class="detail">
+        <p>Familijarna adenomatozna polipoza,
+        Gardenrov sindrom</p>
+        <button class="closeBtn" onclick="closeDetail('fapDetail')">Zatvori</button>
+    </div>
+      <!-- Detalji za FBN2 -->
+    <div id="fbn2Detail" class="detail">
+        <p>Fibrilin-2 arahnodaktilija sa kontrakturom</p>
+        <button class="closeBtn" onclick="closeDetail('fbn2Detail')">Zatvori</button>
+    </div>
+      <!-- Detalji za TC0F1 -->
+    <div id="tc0f1Detail" class="detail">
+        <p>Holt-Oramov sindrom,
+        Treacher-Collinsov sindrom</p>
+        <button class="closeBtn" onclick="closeDetail('tc0f1Detail')">Zatvori</button>
+    </div>
+      <!-- Detalji za F12 -->
+    <div id="f12Detail" class="detail">
+        <p>Koagulacioni faktor XII</p>
+        <button class="closeBtn" onclick="closeDetail('f12Detail')">Zatvori</button>
+    </div>
+    <!-- Pop-up za riječ -->
+    <div id="words6" class="words">
+        <img src="genotip6.png" alt="Slika" style="width: 65px; height: auto; float: left; margin-right: 10px;">
+        <h2 data-detail="sca1Detail">SCA1</h2>
+        <h2 data-detail="hfeDetail">HFE</h2>
+        <h2 data-detail="hlaDetail">HLA</h2>
+        <h2 data-detail="cah1Detail">CAH1</h2>
+
+             <h2 class="spacer"></h2>
+
+        <h2 data-detail="arg1Detail">ARG1</h2>
+        <h2 data-detail="epm2Detail">EPM2</h2>
+
+
+     <h2 class="spacer"></h2>
+
+
+         <button id="closeWordsBtn" class="closeBtn">Zatvori</button>
+     </div>
+     <!-- Detalji za SCA1 -->
+    <div id="sca1Detail" class="detail">
+        <p>Spinocerebelarna atrofija</p>
+        <button class="closeBtn" onclick="closeDetail('sca1Detail')">Zatvori</button>
+    </div>
+      <!-- Detalji za HFE -->
+    <div id="hfeDetail" class="detail">
+        <p>Hemohromatoza</p>
+        <button class="closeBtn" onclick="closeDetail('hfeDetail')">Zatvori</button>
+    </div>
+      <!-- Detalji za HLA -->
+    <div id="hlaDetail" class="detail">
+        <p>Glavni histokompatibilan lokus</p>
+        <button class="closeBtn" onclick="closeDetail('hlaDetail')">Zatvori</button>
+    </div>
+      <!-- Detalji za CAH1 -->
+    <div id="cah1Detail" class="detail">
+        <p>Kongenitalna adrenalna hiperplazija,
+        21-hidroksilaza</p>
+        <button class="closeBtn" onclick="closeDetail('cah1Detail')">Zatvori</button>
+    </div>
+      <!-- Detalji za ARG1 -->
+    <div id="arg1Detail" class="detail">
+        <p>Arginaza deficit,argininemija</p>
+        <button class="closeBtn" onclick="closeDetail('arg1Detail')">Zatvori</button>
+    </div>
+          <!-- Detalji za EPM2 -->
+    <div id="epm2Detail" class="detail">
+        <p>Mioklinička epilepsija</p>
+        <button class="closeBtn" onclick="closeDetail('epm2Detail')">Zatvori</button>
+    </div>
+    <!-- Pop-up za riječ -->
+    <div id="words7" class="words">
+        <img src="genotip7.png" alt="Slika" style="width: 65px; height: auto; float: left; margin-right: 10px;">
+        <h2 data-detail="twistDetail">TWIST</h2>
+        <h2 data-detail="cgdDetail">CGD</h2>
+        <h2 data-detail="zws1Detail">ZWS1</h2>
+        <h2 data-detail="mps viiDetail">MPS VII</h2>
+<h2 data-detail="col1a2Detail">COL1A2</h2>
+<h2 data-detail="gusbDetail">GUSB</h2>
+
+             <h2 class="spacer"></h2>
+
+        <h2 data-detail="cftrDetail">CFTR</h2>
+        <h2 data-detail="mcDetail">MC</h2>
+        <h2 data-detail="hpe3Detail">HPE3</h2>
+
+
+     <h2 class="spacer"></h2>
+
+        
+         <button id="closeWordsBtn" class="closeBtn">Zatvori</button>
+     </div>
+     <!-- Detalji za TWIST -->
+    <div id="twistDetail" class="detail">
+        <p>Transkripcioni faktor TWIST</p>
+        <button class="closeBtn" onclick="closeDetail('twistDetail')">Zatvori</button>
+    </div>
+      <!-- Detalji za CGD -->
+    <div id="cgdDetail" class="detail">
+        <p>Hronična granulomatozna bolest</p>
+        <button class="closeBtn" onclick="closeDetail('cgdDetail')">Zatvori</button>
+    </div>
+      <!-- Detalji za ZWS1 -->
+    <div id="zws1Detail" class="detail">
+        <p>Zellwegerov tip 1</p>
+        <button class="closeBtn" onclick="closeDetail('zws1Detail')">Zatvori</button>
+    </div>
+      <!-- Detalji za MPS VII -->
+    <div id="mps viiDetail" class="detail">
+        <p>Maroteaux-Lamyov sindrom</p>
+        <button class="closeBtn" onclick="closeDetail('mps viiDetail')">Zatvori</button>
+    </div>
+      <!-- Detalji za COL1A2 -->
+    <div id="col1a2Detail" class="detail">
+        <p>Kolagen tip 1,a1-lanac,
+        osteogeneza imperfekta</p>
+        <button class="closeBtn" onclick="closeDetail('col1a2Detail')">Zatvori</button>
+    </div>
+          <!-- Detalji za GUSB -->
+    <div id="gusbDetail" class="detail">
+        <p>Dehidrogenaza mukopolisaharidoza tip VII</p>
+        <button class="closeBtn" onclick="closeDetail('gusbDetail')">Zatvori</button>
+    </div>
+    <!-- Detalji za CFTR -->
+    <div id="cftrDetail" class="detail">
+        <p>Cistična fibroza transmembranski CF regulator</p>
+        <button class="closeBtn" onclick="closeDetail('cftrDetail')">Zatvori</button>
+    </div>
+    <!-- Detalji za MC -->
+    <div id="mcDetail" class="detail">
+        <p>Melanokortinski geni</p>
+        <button class="closeBtn" onclick="closeDetail('mcDetail')">Zatvori</button>
+    </div>
+    <!-- Detalji za HPE3 -->
+    <div id="hpe3Detail" class="detail">
+        <p>Holonoprosencefalija</p>
+        <button class="closeBtn" onclick="closeDetail('hpe3Detail')">Zatvori</button>
+    </div>
+    <!-- Pop-up za riječ -->
+    <div id="words8" class="words">
+        <img src="genotip8.png" alt="Slika" style="width: 65px; height: auto; float: left; margin-right: 10px;">
+        <h2 data-detail="fgfr1Detail">FGFR1</h2>
+        <h2 data-detail="wrnDetail">WRN</h2>
+        <h2 data-detail="rp1Detail">RP1</h2>
+
+        <h2 class="spacer"></h2>
+
+        <h2 data-detail="cyp11b1Detail">CYP11B1</h2>
+<h2 data-detail="eya1Detail">EYA1</h2>
+<h2 data-detail="trps1Detail">TRPS1</h2>
+
+             <h2 class="spacer"></h2>
+
+        
+         <button id="closeWordsBtn" class="closeBtn">Zatvori</button>
+     </div>
+      <!-- Detalji za FGFR1 -->
+    <div id="fgfr1Detail" class="detail">
+        <p>Receptor za fibroblastni faktor rasta 1,
+        Pleifferov sindrom</p>
+        <button class="closeBtn" onclick="closeDetail('fgfr1Detail')">Zatvori</button>
+    </div>
+      <!-- Detalji za WRN -->
+    <div id="wrnDetail" class="detail">
+        <p>Wermerov sindrom</p>
+        <button class="closeBtn" onclick="closeDetail('wrnDetail')">Zatvori</button>
+    </div>
+      <!-- Detalji za RP1 -->
+    <div id="rp1Detail" class="detail">
+        <p>Krvna grupa
+        Pigmentna retinopatija lokus 1</p>
+        <button class="closeBtn" onclick="closeDetail('rp1Detail')">Zatvori</button>
+    </div>
+      <!-- Detalji za CYP11B1 -->
+    <div id="cyp11b1Detail" class="detail">
+        <p>11β hidrolaza-moroksilaza</p>
+        <button class="closeBtn" onclick="closeDetail('cyp11b1Detail')">Zatvori</button>
+    </div>
+      <!-- Detalji za EYA1-->
+    <div id="eya1Detail" class="detail">
+        <p>Brahio-otorenalni sindrom</p>
+        <button class="closeBtn" onclick="closeDetail('eya1Detail')">Zatvori</button>
+    </div>
+          <!-- Detalji za TRPS1 -->
+    <div id="trps1Detail" class="detail">
+        <p>Trihorinofalangealni sindrom</p>
+        <button class="closeBtn" onclick="closeDetail('trps1Detail')">Zatvori</button>
+    </div>
+    <!-- Pop-up za riječ -->
+    <div id="words9" class="words">
+        <img src="genotip9.png" alt="Slika" style="width: 71px; height: auto; float: left; margin-right: 10px;">
+        
+        <h2 class="spacer"></h2>
+
+        <h2 data-detail="galDetail">GAL</h2>
+        <h2 data-detail="frdaDetail">FRDA</h2>
+        <h2 data-detail="ahpDetail">AHP</h2>
+        <h2 data-detail="npsDetail">NPS</h2>
+<h2 data-detail="gapDetail">GAP</h2>
+<h2 data-detail="abo/c5Detail">ABO/C5</h2>
+<h2 data-detail="tsc1Detail">TSC1</h2>
+<button id="closeWordsBtn" class="closeBtn">Zatvori</button>
+     </div>
+      <!-- Detalji za GAL -->
+    <div id="galDetail" class="detail">
+        <p>Galaktozemija</p>
+        <button class="closeBtn" onclick="closeDetail('galDetail')">Zatvori</button>
+    </div>
+      <!-- Detalji za FRDA -->
+    <div id="frdaDetail" class="detail">
+        <p>Friedrichova ataksija</p>
+        <button class="closeBtn" onclick="closeDetail('frdaDetail')">Zatvori</button>
+    </div>
+      <!-- Detalji za AHP -->
+    <div id="ahpDetail" class="detail">
+        <p>Akutna hepatična porfirija</p>
+        <button class="closeBtn" onclick="closeDetail('ahpDetail')">Zatvori</button>
+    </div>
+      <!-- Detalji za NPS -->
+    <div id="npsDetail" class="detail">
+        <p>Nokti-patela sindrom</p>
+        <button class="closeBtn" onclick="closeDetail('npsDetail')">Zatvori</button>
+    </div>
+      <!-- Detalji za GAP-->
+    <div id="gapDetail" class="detail">
+        <p>Sindrom bazalnih ćelija
+        Gorlinov sindrom</p>
+        <button class="closeBtn" onclick="closeDetail('gapDetail')">Zatvori</button>
+    </div>
+          <!-- Detalji za ABO/C5 -->
+    <div id="abo/c5Detail" class="detail">
+        <p>ABO krvna grupa/komplement faktor 5</p>
+        <button class="closeBtn" onclick="closeDetail('abo/c5Detail')">Zatvori</button>
+    </div>
+     <!-- Detalji za TSC1 -->
+    <div id="tsc1Detail" class="detail">
+        <p>Tuberozna skleroza,lokus 1</p>
+        <button class="closeBtn" onclick="closeDetail('tsc1Detail')">Zatvori</button>
+    </div>
+    <!-- Pop-up za riječ -->
+    <div id="words10" class="words">
+        <img src="genotip10.png" alt="Slika" style="width: 72px; height: auto; float: left; margin-right: 10px;">
+        
+        
+        <h2 class="spacer"></h2>
+ <h2 class="spacer"></h2>
+
+
+        <h2 data-detail="ckn2Detail">CKN2</h2>
+        <h2 data-detail="retDetail">RET</h2>
+
+         <h2 class="spacer"></h2>
+
+        <h2 data-detail="fgfr2Detail">FGFR2</h2>
+        <h2 data-detail="cepDetail">CEP</h2>
+
+         <h2 class="spacer"></h2>
+
+
+<button id="closeWordsBtn" class="closeBtn">Zatvori</button>
+     </div>
+     <!-- Detalji za CKN2 -->
+    <div id="ckn2Detail" class="detail">
+        <p>Cockayneov sindrom 2,
+        kasna pojava</p>
+        <button class="closeBtn" onclick="closeDetail('ckn2Detail')">Zatvori</button>
+    </div>
+      <!-- Detalji za RET-->
+    <div id="retDetail" class="detail">
+        <p>Receptor tirozin kinaze</p>
+        <button class="closeBtn" onclick="closeDetail('retDetail')">Zatvori</button>
+    </div>
+          <!-- Detalji za FGFR2 -->
+    <div id="fgfr2Detail" class="detail">
+        <p>Receptor za fibroblastni faktor rasta 2,
+        Crouzonov,Pleifferov,Apertov sindrom</p>
+        <button class="closeBtn" onclick="closeDetail('fgfr2Detail')">Zatvori</button>
+    </div>
+     <!-- Detalji za CEP -->
+    <div id="cepDetail" class="detail">
+        <p>Kongenitalna eritropoetska porfirija</p>
+        <button class="closeBtn" onclick="closeDetail('cepDetail')">Zatvori</button>
+    </div>
+     <!-- Pop-up za riječ -->
+    <div id="words11" class="words">
+        <img src="genotip11.png" alt="Slika" style="width: 75px; height: auto; float: left; margin-right: 10px;">
+        
+        <h2 data-detail="npDetail">NP</h2>
+        <h2 data-detail="bwsDetail">BWS</h2>
+        <h2 data-detail="insDetail">INS</h2>
+        <h2 data-detail="hbβDetail">Hbβ</h2>
+<h2 data-detail="wt1Detail">WT1</h2>
+<h2 data-detail="ush1cDetail">USH1C</h2>
+<h2 data-detail="men1Detail">MEN1</h2>
+<h2 data-detail="ush1bDetail">USH1B</h2>
+<h2 data-detail="tyrDetail">TYR</h2>
+<h2 data-detail="ataDetail">ATA</h2>
+<h2 data-detail="aipDetail">AIP</h2>
+
+
+         <h2 class="spacer"></h2>
+
+
+<button id="closeWordsBtn" class="closeBtn">Zatvori</button>
+     </div>
+      <!-- Detalji za NP -->
+    <div id="npDetail" class="detail">
+        <p>Niemann-Pickova bolest tip A i B</p>
+        <button class="closeBtn" onclick="closeDetail('npDetail')">Zatvori</button>
+    </div>
+      <!-- Detalji za BWS-->
+    <div id="bwsDetail" class="detail">
+        <p>Beckwith-Wiedemannov sindrom</p>
+        <button class="closeBtn" onclick="closeDetail('bwsDetail')">Zatvori</button>
+    </div>
+          <!-- Detalji za INS -->
+    <div id="insDetail" class="detail">
+        <p>Insulin zavisan dijabetes mellitus tip 2</p>
+        <button class="closeBtn" onclick="closeDetail('insDetail')">Zatvori</button>
+    </div>
+     <!-- Detalji za Hbβ -->
+    <div id="hbβDetail" class="detail">
+        <p>Sylov sindrom
+        β-globin gen</p>
+        <button class="closeBtn" onclick="closeDetail('hbβDetail')">Zatvori</button>
+    </div>
+     <!-- Detalji za WT1 -->
+    <div id="wt1Detail" class="detail">
+        <p>Wilmsov tumor 1 gen</p>
+        <button class="closeBtn" onclick="closeDetail('wt1Detail')">Zatvori</button>
+    </div>
+      <!-- Detalji za USH1C-->
+    <div id="ush1cDetail" class="detail">
+        <p>Usher sindrom tip 1C</p>
+        <button class="closeBtn" onclick="closeDetail('ush1cDetail')">Zatvori</button>
+    </div>
+          <!-- Detalji za MEN1 -->
+    <div id="men1Detail" class="detail">
+        <p>Multipla endokrina neoplazija sindrom tip 1</p>
+        <button class="closeBtn" onclick="closeDetail('men1Detail')">Zatvori</button>
+    </div>
+     <!-- Detalji za USH1B -->
+    <div id="ush1bDetail" class="detail">
+        <p>Usher sindrom tip 1B</p>
+        <button class="closeBtn" onclick="closeDetail('ush1bDetail')">Zatvori</button>
+    </div>
+    <!-- Detalji za TYR -->
+    <div id="tyrDetail" class="detail">
+        <p>Okulokutani albinizam</p>
+        <button class="closeBtn" onclick="closeDetail('tyrDetail')">Zatvori</button>
+    </div>
+    <!-- Detalji za ATA -->
+    <div id="ataDetail" class="detail">
+        <p>Ataksija telangiektazija</p>
+        <button class="closeBtn" onclick="closeDetail('ataDetail')">Zatvori</button>
+    </div>
+    <!-- Detalji za AIP -->
+    <div id="aipDetail" class="detail">
+        <p>Akutna intermitentna porfirija</p>
+        <button class="closeBtn" onclick="closeDetail('aipDetail')">Zatvori</button>
+    </div>
+    <!-- Pop-up za riječ -->
+    <div id="words12" class="words">
+        <img src="genotip12.png" alt="Slika" style="width: 71px; height: auto; float: left; margin-right: 10px;">
+        <h2 data-detail="vwfDetail">VWF</h2>
+        <h2 data-detail="drplaDetail">DRPLA</h2>
+        <h2 data-detail="krt5Detail">KRT5</h2>
+        <h2 data-detail="col2a1Detail">COL2A1</h2>
+
+          <h2 class="spacer"></h2>
+
+<h2 data-detail="tbx5Detail">TBX5</h2>
+<h2 data-detail="sca2Detail">SCA2</h2>
+<h2 data-detail="pkuDetail">PKU</h2>
+  
+    <h2 class="spacer"></h2>
+
+<button id="closeWordsBtn" class="closeBtn">Zatvori</button>
+     </div>
+      <!-- Detalji za VWF -->
+    <div id="vwfDetail" class="detail">
+        <p>Von Willebrandova bolest</p>
+        <button class="closeBtn" onclick="closeDetail('vwfDetail')">Zatvori</button>
+    </div>
+      <!-- Detalji za DRPLA-->
+    <div id="drplaDetail" class="detail">
+        <p>Dentatorubropalidoluyijalna bolest</p>
+        <button class="closeBtn" onclick="closeDetail('drplaDetail')">Zatvori</button>
+    </div>
+          <!-- Detalji za KRT5 -->
+    <div id="krt5Detail" class="detail">
+        <p>Epidermolzsis bullosa simplex</p>
+        <button class="closeBtn" onclick="closeDetail('krt5Detail')">Zatvori</button>
+    </div>
+     <!-- Detalji za COL2A1 -->
+    <div id="col2a1Detail" class="detail">
+        <p>Kolagen tip II,Sticklerov sindrom</p>
+        <button class="closeBtn" onclick="closeDetail('col2a1Detail')">Zatvori</button>
+    </div>
+    <!-- Detalji za TBX5 -->
+    <div id="tbx5Detail" class="detail">
+        <p>Testis-determinišući faktor</p>
+        <button class="closeBtn" onclick="closeDetail('tbx5Detail')">Zatvori</button>
+    </div>
+    <!-- Detalji za SCA2 -->
+    <div id="sca2Detail" class="detail">
+        <p>Spinoceleberalna ataksija,lokus 2</p>
+        <button class="closeBtn" onclick="closeDetail('sca2Detail')">Zatvori</button>
+    </div>
+    <!-- Detalji za PKU -->
+    <div id="pkuDetail" class="detail">
+        <p>Fenilketonurija</p>
+        <button class="closeBtn" onclick="closeDetail('pkuDetail')">Zatvori</button>
+    </div>
+    <!-- Pop-up za riječ -->
+    <div id="words13" class="words">
+        <img src="genotip13.png" alt="Slika" style="width: 60px; height: auto; float: left; margin-right: 10px;">
+        <h2 data-detail="rrnaDetail">rRNA</h2>
+        <h2 data-detail="dfnb1/a3Detail">DFNB1/A3</h2>
+        <h2 data-detail="brca2Detail">BRCA2</h2>
+        <h2 data-detail="rbDetail">RB</h2>
+       <h2 data-detail="wdDetail">WD</h2>
+
+         <h2 class="spacer"></h2>
+
+
+       
+
+        <h2 data-detail="f7Detail">F7</h2>
+
+
+        <h2 data-detail="f10Detail">F10</h2>
+
+
+
+ <h2 class="spacer"></h2>
+  <h2 class="spacer"></h2>
+
+
+
+
+         <button id="closeWordsBtn" class="closeBtn">Zatvori</button>
+    </div>
+    <!-- Detalji za rRNA-->
+    <div id="rrnaDetail" class="detail">
+        <p>Ribozomalna RNK</p>
+        <button class="closeBtn" onclick="closeDetail('rrnaDetail')">Zatvori</button>
+    </div>
+      <!-- Detalji za DFNB1/A3-->
+    <div id="dfnb1/a3Detail" class="detail">
+        <p>Nesindromska senzorineuralna gluvoća,
+        prvi recesivni,treći dominantni lokus</p>
+        <button class="closeBtn" onclick="closeDetail('dfnb1/a3Detail')">Zatvori</button>
+    </div>
+          <!-- Detalji za BRCA2 -->
+    <div id="brca2Detail" class="detail">
+        <p>Familijarni kancer dojke/ovarija lokus 2</p>
+        <button class="closeBtn" onclick="closeDetail('brca2Detail')">Zatvori</button>
+    </div>
+     <!-- Detalji za RB -->
+    <div id="rbDetail" class="detail">
+        <p>Kolagen tip II,Sticklerov sindrom</p>
+        <button class="closeBtn" onclick="closeDetail('rbDetail')">Zatvori</button>
+    </div>
+    <!-- Detalji za WD -->
+    <div id="wdDetail" class="detail">
+        <p>wilsonova bolest</p>
+        <button class="closeBtn" onclick="closeDetail('wdDetail')">Zatvori</button>
+    </div>
+    <!-- Detalji za F7 -->
+    <div id="f7Detail" class="detail">
+        <p>Koagulacioni protein VII</p>
+        <button class="closeBtn" onclick="closeDetail('f7Detail')">Zatvori</button>
+    </div>
+    <!-- Detalji za F10 -->
+    <div id="f10Detail" class="detail">
+        <p>Koagulacioni protein X</p>
+        <button class="closeBtn" onclick="closeDetail('f10Detail')">Zatvori</button>
+    </div>
+    <script>
+        // Otvori i zatvori detalje o riječima
+        function openDetail(detailId) {
+            document.getElementById(detailId).style.display = 'block';
+        }
+
+        function closeDetail(detailId) {
+            document.getElementById(detailId).style.display = 'none';
+        }
+
+        // Otvaranje pop-upa s riječima na klik hromozoma
+        function openWords(targetId) {
+            const words = document.querySelectorAll(".words");
+            words.forEach(word => {
+                word.style.display = "none";
+            });
+
+            const target = document.getElementById(targetId);
+            if (target) {
+                target.style.display = "block";
+            }
+        }
+
+        // Klik na riječ unutar pop-upa za prikaz detalja
+        document.querySelectorAll(".words h2").forEach(item => {
+            item.addEventListener("click", function () {
+                const detailId = this.getAttribute("data-detail");
+                openDetail(detailId);
+            });
+        });
+
+        // Zatvaranje svih pop-upova s riječima
+        document.querySelectorAll(".closeBtn").forEach(button => {
+            button.addEventListener("click", function () {
+                const targetId = this.closest('.words').id;
+                closeWords(targetId);
+            });
+        });
+
+        function closeWords(targetId) {
+            const target = document.getElementById(targetId);
+            if (target) {
+                target.style.display = "none";
+            }
+        }
+
+        // Povezivanje hromozoma sa pop-upovima s riječima
+        document.querySelectorAll("img").forEach(img => {
+            img.addEventListener("click", function () {
+                openWords(img.dataset.target);
+            });
+        });
+    </script>
+</body>
+</html>
